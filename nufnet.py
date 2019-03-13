@@ -27,6 +27,7 @@ class NUFBlock(nn.Module):
         output_reduce = int(in_planes/2)
         
         self.reduce = nn.Conv2d(inplanes, output_reduce, kernel_size=1, stride=1, padding=0)
+        self.reduce_bn = nn.BatchNorm2d(output_reduce)
         
         output = int(in_planes/4)
         
@@ -83,6 +84,7 @@ class NUFBlock(nn.Module):
         residual = x
         
         x = self.reduce(x)
+        x = self.reduce_bn(x)
         
         y1 = self.b1(x)
         y2 = self.b2(x)
